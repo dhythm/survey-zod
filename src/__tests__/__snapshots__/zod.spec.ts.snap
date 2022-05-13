@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`zod schema should be passed 1`] = `
+[ZodError: [
+  {
+    "code": "too_big",
+    "maximum": 16,
+    "type": "string",
+    "inclusive": true,
+    "message": "String must contain at most 16 character(s)",
+    "path": [
+      "password"
+    ]
+  },
+  {
+    "code": "custom",
+    "message": "password must include capital letter and small letter.",
+    "path": [
+      "password"
+    ]
+  },
+  {
+    "code": "custom",
+    "message": "password must include alphanumeric.",
+    "path": [
+      "password"
+    ]
+  },
+  {
+    "code": "custom",
+    "message": "password must include special character.",
+    "path": [
+      "password"
+    ]
+  }
+]]
+`;

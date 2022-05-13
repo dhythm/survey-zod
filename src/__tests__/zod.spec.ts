@@ -1,7 +1,7 @@
 import { z, ZodError } from "zod";
 
 describe("zod", () => {
-  describe("priority", () => {
+  describe("schema", () => {
     const schema = z.object({
       password: z
         .string()
@@ -25,11 +25,12 @@ describe("zod", () => {
     });
     it("should be passed", () => {
       try {
-        schema.parse(
-          "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901"
-        );
+        schema.parse({
+          password:
+            "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901",
+        });
       } catch (err) {
-        expect(err as ZodError).toEqual({});
+        expect(err as ZodError).toMatchSnapshot();
       }
     });
   });
