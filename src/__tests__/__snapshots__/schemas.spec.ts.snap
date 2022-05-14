@@ -22,7 +22,7 @@ exports[`zod changePasswordSchema should be failed 1`] = `
 ]]
 `;
 
-exports[`zod discriminatedUnionSchema should be failed 1`] = `
+exports[`zod discriminatedUnion should be failed 1`] = `
 [ZodError: [
   {
     "code": "invalid_type",
@@ -36,7 +36,7 @@ exports[`zod discriminatedUnionSchema should be failed 1`] = `
 ]]
 `;
 
-exports[`zod discriminatedUnionSchema should be failed 2`] = `
+exports[`zod discriminatedUnion should be failed 2`] = `
 [ZodError: [
   {
     "code": "invalid_type",
@@ -90,6 +90,39 @@ exports[`zod loginSchema should be failed 1`] = `
     "path": [
       "password"
     ]
+  }
+]]
+`;
+
+exports[`zod refine and superRefine should be failed 1`] = `
+[ZodError: [
+  {
+    "code": "too_big",
+    "maximum": 3,
+    "type": "array",
+    "inclusive": true,
+    "message": "Too many items 😡",
+    "path": []
+  }
+]]
+`;
+
+exports[`zod refine and superRefine should be failed 2`] = `
+[ZodError: [
+  {
+    "code": "custom",
+    "message": "No duplicated allowed.",
+    "path": []
+  }
+]]
+`;
+
+exports[`zod transform should be failed 1`] = `
+[ZodError: [
+  {
+    "code": "custom",
+    "message": "Not a number",
+    "path": []
   }
 ]]
 `;

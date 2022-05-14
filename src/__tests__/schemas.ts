@@ -41,14 +41,6 @@ export const changePasswordSchema = z
     }
   );
 
-export const dateSchema = z.preprocess((arg) => {
-  if (typeof arg === "string" || arg instanceof Date) return new Date(arg);
-}, z.date());
-
-// `as const` must be needed, otherwise z.enum will show error.
-const values = ["Salmon", "Tuna", "Trout"] as const;
-export const enumSchema = z.enum(values);
-
 const teacherBaseSchema = z.object({ students: z.array(z.string()) });
 const hasIdSchema = z.object({ id: z.string() });
 const teacherSchema = teacherBaseSchema.merge(hasIdSchema);
@@ -68,7 +60,26 @@ const userSchema = z.object({
 });
 const deepPartialUserSchema = userSchema.deepPartial();
 
-export const discriminatedUnionSchema = z.discriminatedUnion("type", [
-  z.object({ type: z.literal("a"), a: z.string() }),
-  z.object({ type: z.literal("b"), b: z.string() }),
-]);
+const personSchema = z.object({ name: z.string() });
+const employeeSchema = z.object({ role: z.string() });
+const employedPersonScheme = z.intersection(personSchema, employeeSchema);
+// equivalent to: personSchema.and(employeeSchema)
+// CAVEAT:
+// Though in many cases, it is recommended to use A.merge(B) to merge two objects.
+// The.merge method returns a new ZodObject instance, whereas A.and(B) returns a less useful ZodIntersection instance that lacks common object methods like pick and omit.
+// https://github.com/colinhacks/zod#intersections
+
+interface Category {
+  name: string;
+  subCategories: Category[];
+}
+const categorySchema: z.ZodType<Category> = z.lazy(() =>
+  z.object({ name: z.string(), subCategories: z.array(categorySchema) })
+);
+
+// https://github.com/colinhacks/zod#json-type
+const literalSchema = z.union([z.string(), z.number(), z.boolean(), z.null()]);
+type Json = z.infer<typeof literalSchema> | { [key: string]: Json } | Json[];
+export const jsonSchema: z.ZodType<Json> = z.lazy(() =>
+  z.union([literalSchema, z.array(jsonSchema), z.record(jsonSchema)])
+);
