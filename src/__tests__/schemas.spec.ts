@@ -246,6 +246,17 @@ describe("zod", () => {
     });
   });
 
+  describe("Error handling and error formatting", () => {
+    it("should be passed", () => {});
+    it("should be failed", () => {
+      let data = z.object({ name: z.string() }).safeParse({ name: 12 });
+      if (!data.success) {
+        expect(data.error.issues).toMatchSnapshot();
+        expect(data.error.format()).toMatchSnapshot();
+      }
+    });
+  });
+
   describe("", () => {
     it("should be passed", () => {});
     it("should be failed", () => {});

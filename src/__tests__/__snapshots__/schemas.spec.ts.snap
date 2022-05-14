@@ -1,5 +1,30 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`zod Error handling and error formatting should be failed 1`] = `
+Array [
+  Object {
+    "code": "invalid_type",
+    "expected": "string",
+    "message": "Expected string, received number",
+    "path": Array [
+      "name",
+    ],
+    "received": "number",
+  },
+]
+`;
+
+exports[`zod Error handling and error formatting should be failed 2`] = `
+Object {
+  "_errors": Array [],
+  "name": Object {
+    "_errors": Array [
+      "Expected string, received number",
+    ],
+  },
+}
+`;
+
 exports[`zod changePasswordSchema should be failed 1`] = `
 [ZodError: [
   {

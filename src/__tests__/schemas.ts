@@ -83,3 +83,13 @@ type Json = z.infer<typeof literalSchema> | { [key: string]: Json } | Json[];
 export const jsonSchema: z.ZodType<Json> = z.lazy(() =>
   z.union([literalSchema, z.array(jsonSchema), z.record(jsonSchema)])
 );
+
+function makeSchemaOptional<T extends z.ZodTypeAny>(schema: T) {
+  return schema.optional();
+}
+function makeStringSchemaOptional<T extends z.ZodType<string>>(schema: T) {
+  return schema.optional();
+}
+const arg = makeSchemaOptional(z.string());
+makeStringSchemaOptional(z.string());
+// makeStringSchemaOptional(z.number());
