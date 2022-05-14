@@ -40,3 +40,35 @@ export const changePasswordSchema = z
       message: "confirmationPassword does not match.",
     }
   );
+
+export const dateSchema = z.preprocess((arg) => {
+  if (typeof arg === "string" || arg instanceof Date) return new Date(arg);
+}, z.date());
+
+// `as const` must be needed, otherwise z.enum will show error.
+const values = ["Salmon", "Tuna", "Trout"] as const;
+export const enumSchema = z.enum(values);
+
+const teacherBaseSchema = z.object({ students: z.array(z.string()) });
+const hasIdSchema = z.object({ id: z.string() });
+const teacherSchema = teacherBaseSchema.merge(hasIdSchema);
+const alternativeTeacherSchema = teacherBaseSchema.extend(hasIdSchema.shape);
+const noIdTeacherSchema = teacherSchema.omit({ id: true });
+const alternativeNoIdTeacherSchema = teacherSchema.pick({ students: true });
+const partialTeacherSchema = teacherSchema.partial();
+const optionalIdTeacherSchema = teacherSchema.partial({ id: true });
+
+const userSchema = z.object({
+  username: z.string(),
+  location: z.object({
+    latitude: z.number(),
+    longitude: z.number(),
+  }),
+  strings: z.array(z.object({ value: z.string() })),
+});
+const deepPartialUserSchema = userSchema.deepPartial();
+
+export const discriminatedUnionSchema = z.discriminatedUnion("type", [
+  z.object({ type: z.literal("a"), a: z.string() }),
+  z.object({ type: z.literal("b"), b: z.string() }),
+]);

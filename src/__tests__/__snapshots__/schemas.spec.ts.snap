@@ -22,6 +22,34 @@ exports[`zod changePasswordSchema should be failed 1`] = `
 ]]
 `;
 
+exports[`zod discriminatedUnionSchema should be failed 1`] = `
+[ZodError: [
+  {
+    "code": "invalid_type",
+    "expected": "string",
+    "received": "undefined",
+    "path": [
+      "a"
+    ],
+    "message": "Required"
+  }
+]]
+`;
+
+exports[`zod discriminatedUnionSchema should be failed 2`] = `
+[ZodError: [
+  {
+    "code": "invalid_type",
+    "expected": "string",
+    "received": "undefined",
+    "path": [
+      "b"
+    ],
+    "message": "Required"
+  }
+]]
+`;
+
 exports[`zod loginSchema should be failed 1`] = `
 [ZodError: [
   {
