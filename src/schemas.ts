@@ -109,5 +109,15 @@ const nameAndEmailSchema = z
       email: z.literal(""),
     })
   );
+const alternativeNameAndEmailSchema = z.union([
+  z.object({
+    name: z.string(),
+    email: z.string().email(),
+  }),
+  z.object({
+    name: z.literal(""),
+    email: z.literal(""),
+  }),
+]);
 
 export const nameAndEmailArraySchema = z.array(nameAndEmailSchema);
