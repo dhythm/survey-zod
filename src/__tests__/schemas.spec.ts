@@ -1,5 +1,5 @@
 import { z, ZodError } from "zod";
-import { changePasswordSchema, loginSchema } from "./schemas";
+import { changePasswordSchema, loginSchema } from "../schemas";
 
 describe("zod", () => {
   describe("loginSchema", () => {
