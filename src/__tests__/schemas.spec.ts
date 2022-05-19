@@ -1,5 +1,9 @@
 import { z, ZodError } from "zod";
-import { changePasswordSchema, loginSchema } from "../schemas";
+import {
+  changePasswordSchema,
+  loginSchema,
+  nameAndEmailArraySchema,
+} from "../schemas";
 
 describe("zod", () => {
   describe("loginSchema", () => {
@@ -254,6 +258,33 @@ describe("zod", () => {
         expect(data.error.issues).toMatchSnapshot();
         expect(data.error.format()).toMatchSnapshot();
       }
+    });
+  });
+
+  describe("nameAndEmailArraySchema", () => {
+    it("should be passed", () => {
+      expect(() => nameAndEmailArraySchema.parse([])).not.toThrowError();
+      expect(() =>
+        nameAndEmailArraySchema.parse([
+          { name: "John Smith", email: "john@sample.com" },
+        ])
+      ).not.toThrowError();
+      expect(() =>
+        nameAndEmailArraySchema.parse([{ name: "", email: "" }])
+      ).not.toThrowError();
+    });
+    it("should be failed", () => {
+      expect(() =>
+        nameAndEmailArraySchema.parse([
+          { name: "John Smith", email: "wrong format" },
+        ])
+      ).toThrowError();
+      expect(() =>
+        nameAndEmailArraySchema.parse([{ email: "john@sample.com" }])
+      ).toThrowError();
+      expect(() =>
+        nameAndEmailArraySchema.parse([{ name: "John Smith", email: "" }])
+      ).toThrowError();
     });
   });
 

@@ -93,3 +93,21 @@ function makeStringSchemaOptional<T extends z.ZodType<string>>(schema: T) {
 const arg = makeSchemaOptional(z.string());
 makeStringSchemaOptional(z.string());
 // makeStringSchemaOptional(z.number());
+
+// const nameAndEmailSchema = z.object({
+//   name: z.string(),
+//   email: z.string().email(),
+// });
+const nameAndEmailSchema = z
+  .object({
+    name: z.string(),
+    email: z.string().email(),
+  })
+  .or(
+    z.object({
+      name: z.literal(""),
+      email: z.literal(""),
+    })
+  );
+
+export const nameAndEmailArraySchema = z.array(nameAndEmailSchema);
