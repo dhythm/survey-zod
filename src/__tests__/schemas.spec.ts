@@ -288,6 +288,28 @@ describe("zod", () => {
     });
   });
 
+  describe("object", () => {
+    const schema = z.object({ foo: z.string(), bar: z.number() });
+    it("should be passed", () => {});
+    it("should be failed", () => {
+      expect(() => schema.parse({ foo: "foo", bar: "bar" })).toThrowError(
+        "Expected number, received string"
+      );
+      expect(() => schema.parse(null)).toThrowError(
+        "Expected object, received null"
+      );
+      expect(() =>
+        schema.refine((v) => v, { message: "custom message" }).parse(null)
+      ).toThrowError("Expected object, received null");
+      expect(() =>
+        schema
+          .nullish()
+          .refine((v) => v, { message: "custom message" })
+          .parse(null)
+      ).toThrowError("custom message");
+    });
+  });
+
   describe("", () => {
     it("should be passed", () => {});
     it("should be failed", () => {});
